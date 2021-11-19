@@ -1,0 +1,177 @@
+Address Class
+-----------------------
+------------------------
+public class Address {
+	String street;
+	String city;
+	String state;
+	int zip;
+	String country;
+	
+	public Address() {
+		
+	}
+
+	public Address(String street, String city, String state, int zip, String country) {
+		super();
+		this.street = street;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.country = country;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public int getZip() {
+		return zip;
+	}
+
+	public void setZip(int zip) {
+		this.zip = zip;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	@Override
+	public String toString() {
+		return "Address [street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip + ", country="
+				+ country + "]";
+	}
+	
+
+}
+-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
+Customer Class
+--------------------
+------------------------
+public class Customer {
+	int cid;
+	String cname;
+	int cnum;
+	Address address;
+	
+	public Customer() {
+		
+	}
+	public Customer(Address address) {
+		this.address=address;
+	}
+	public Customer(int cid, String cname, int cnum, Address address) {
+		super();
+		this.cid = cid;
+		this.cname = cname;
+		this.cnum = cnum;
+		this.address = address;
+	}
+	public int getCid() {
+		return cid;
+	}
+	public void setCid(int cid) {
+		this.cid = cid;
+	}
+	public String getCname() {
+		return cname;
+	}
+	public void setCname(String cname) {
+		this.cname = cname;
+	}
+	public int getCnum() {
+		return cnum;
+	}
+	public void setCnum(int cnum) {
+		this.cnum = cnum;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	@Override
+	public String toString() {
+		return "Customer [cid=" + cid + ", cname=" + cname + ", cnum=" + cnum + ", address=" + address + "]";
+	}
+	public void myInit() {
+		System.out.println("--------object initialized--------");
+	}
+	public void myDestroy() {
+		System.out.println("-------object destroyed------");
+	}
+
+}
+---------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+Test Class with Main method
+----------------------------------
+----------------------------------
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+
+	public static void main(String[] args) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("custbeans.xml");
+		Customer c1=(Customer)context.getBean("cust");
+		System.out.println(c1);
+		ClassPathXmlApplicationContext cxt = (ClassPathXmlApplicationContext)context;
+		cxt.close();
+
+	}
+
+}
+---------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
+Bean Xml 
+--------------------
+-------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"> 
+   <bean id="adrs" class="Address">
+   <property name="street" value="nehra"/>
+   <property name="city" value="darbhanga"/>
+   <property name="state" value="bihar"/>
+   <property name="zip" value="847233"/>
+   <property name="country" value="bihar"/>
+   </bean>
+     <bean id="cust" class="Customer">
+   <property name="cid" value="101"/>
+   <property name="cname" value="nilesh"/>
+   <property name="cnum" value="7352"/>
+   <constructor-arg ref="adrs"/>
+  
+   </bean>
+   
+   </beans>

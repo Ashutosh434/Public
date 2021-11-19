@@ -1,0 +1,99 @@
+-----POM.XML----------
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>shubham</groupId>
+  <artifactId>Assignment</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+
+  
+  <dependencies>
+  
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-core</artifactId>
+    <version>4.0.0.RELEASE</version>
+</dependency>
+
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>4.0.0.RELEASE</version>
+</dependency>
+
+
+  </dependencies>
+</project>
+  
+  
+  
+  
+  
+---------TEST.JAVA----------
+package shubham_assignment;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+
+	public static void main(String[] args) {
+		AbstractApplicationContext  context = new ClassPathXmlApplicationContext("config.xml");
+		ContextAware appcontext= (ContextAware)context.getBean("context");
+		ApplicationContext appCon =appcontext.getContext();
+		Class a= (Class)appCon.getBean("pro");
+		a.doTask();	
+	}
+}
+
+
+--------CLASS.JAVA------
+
+package shubham_assignment;
+
+public class Class {
+	
+	public void doTask(){
+		System.out.println("we have to do our Assignment");
+	}
+}
+
+
+----------CONFIG.XML----------------
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans.xsd ">
+  
+    <bean id="pro" class="shubham_assignment.Class"/>
+    <bean id="context" class="shubham_assignment.ContextAware"/>
+</beans> 
+
+
+
+
+---------------CONTEXTAWARE.JAVA----------
+
+package shubham_assignment;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+
+public class ContextAware implements ApplicationContextAware {
+	ApplicationContext context;
+	public ApplicationContext getContext() {
+		return context;
+	}
+	public void setApplicationContext(ApplicationContext context)
+	 {
+		this.context=context;
+	}
+}  
+
+
+
+
+
+

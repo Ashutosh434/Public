@@ -1,0 +1,99 @@
+___________________________________________________________________________________________________
+Spring Boot Q7
+// Orders Class......
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
+public class orders {
+	@Id
+	private int orderid;
+	private String ordername;
+	
+	public orders() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public orders(int orderid, String ordername) {
+		super();
+		this.orderid = orderid;
+		this.ordername = ordername;
+	}
+	public int getOrderid() {
+		return orderid;
+	}
+	public String getOrdername() {
+		return ordername;
+	}
+	@Override
+	public String toString() {
+		return "orders [orderid=" + orderid + ", ordername=" + ordername + "]";
+	}
+}
+___________________________________________________________________________________________________
+//Controller Class
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import restassignment.questions.model.orders;
+import restassignment.questions.repos.OrderRepo;
+
+
+
+@RestController
+public class question7 {
+	@Autowired
+	private OrderRepo orepo;
+	
+	@PostMapping("/order")
+	public String addorder(@RequestBody orders ord) {
+		orepo.save(ord);
+		return "Order Placed with Id: "+ord.getOrderid();
+	}
+	@GetMapping("/allorders")
+	public List<orders>getords(){
+		return orepo.findAll();
+	}
+	@DeleteMapping("/orddelete/{id}")
+	public String deletebook(@PathVariable int id) {
+		orepo.deleteById(id);
+		return "Order Deleted with id :"+id;	
+	}
+	@GetMapping("/findord/{id}")
+	public Optional<orders>getord(@PathVariable int id){
+		return orepo.findById(id);
+	}
+}
+___________________________________________________________________________________________________
+// OrderRepo Interface
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import restassignment.questions.model.orders;
+
+public interface OrderRepo extends MongoRepository<orders, Integer> {
+
+}
+___________________________________________________________________________________________________
+// Main Class
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
+}
+___________________________________________________________________________________________________
